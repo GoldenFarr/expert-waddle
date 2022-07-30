@@ -1,0 +1,31 @@
+import json
+from urllib import request
+from urllib.error import HTTPError
+
+
+WEBHOOK_URL = 'https://discord.com/api/webhooks/1002898115805843456/X4Mq3U6aJBCIi-ur3snmIv72lVHG6qLlXKLr2goKUoWEYMtMcbxKTY8GcoXGyIA0ROoi'
+
+payload = {
+    'content': "Salut les z'agrumes ! Ça zeste ?"
+}
+
+headers = {
+    'Content-Type': 'application/json',
+    'user-agent': 'Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11'
+}
+
+req = request.Request(url=WEBHOOK_URL,
+                      data=json.dumps(payload).encode('utf-8'),
+                      headers=headers,
+                      method='POST')
+
+try:
+    response = request.urlopen(req)
+    print(response.status)
+    print(response.reason)
+    print(response.headers)
+except HTTPError as e:
+    print('ERROR')
+    print(e.reason)
+    print(e.hdrs)
+    print(e.file.read())
